@@ -14,7 +14,12 @@ public class CacheRestController {
 
     @GetMapping("go")
     public ResponseEntity<String> mainEntrance() {
-        return new ResponseEntity<String>(cacheService.changeMessage(), HttpStatus.OK);
+        return new ResponseEntity<>(cacheService.changeMessage(), HttpStatus.OK);
+    }
+
+    @GetMapping("clearCache")
+    public ResponseEntity<String> cleanCache() {
+        return new ResponseEntity<>(cacheService.clearCache(), HttpStatus.OK);
     }
 
     @Autowired
