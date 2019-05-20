@@ -12,16 +12,19 @@ public class CacheService {
 
     public static final String KEY = "cache-key";
 
-    @Cacheable(value = "testCache", key = "#root.target.KEY", unless = "#result == null")
-    public String changeMessage() {
+    private String dateTimeRef;
+
+    public void changeMessage() {
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String text = date.format(formatter);
+        dateTimeRef = date.format(formatter);
+    }
 
-
+    @Cacheable(value = "testCache", key = "#root.target.KEY", unless = "#result == null")
+    public String buildMessage() {
         int random = (int)(Math.random() * 5 + 1);
-        System.out.println("Generated random number -> " + random + " - Time: " + text);
-        return "Hello, World! n." + random + " - Time: " + text;
+        System.out.println("Generated random number -> " + random + " - Time: " + dateTimeRef);
+        return "Hello, World! n." + random + " - Time: " + dateTimeRef;
     }
 
     @CacheEvict(value = "testCache", allEntries = true)
